@@ -1,0 +1,48 @@
+---
+title: "Linear Regression"
+author: "Xiaochang Miao"
+date: "11/16/2017"
+output: html_document
+---
+## Load the data
+```{r}
+setwd("/Users/xiaochangmiao/GitHub/ML-Course/Statistical Learning/Regression")
+data = read.csv("Advertising.csv")
+data = data[, 2:5]
+```
+
+## Model with ONLY main effects
+```{r cars}
+lr = lm(formula = "sales ~. ", data = data)
+summary(lr)
+```
+
+```{r, echo=FALSE}
+par(mfrow= c(2,2))
+plot(lr)
+```
+The residual plot shows a clear U-shape, suggesting a non-linearity effect.
+
+```{r}
+hist(lr$residuals, breaks = 20, xlab = "Residuals", main = "Histogram of Residuals")
+```
+
+## Model with interaction term
+
+You can also embed plots, for example:
+
+```{r}
+lr = lm(formula = "sales ~ TV + radio + TV : radio", data = data)
+summary(lr)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(lr)
+```
+Including the interaction term clearly improves the predictive power.
+
+```{r}
+hist(lr$residuals, breaks = 20, xlab = "Residuals", main = "Histogram of Residuals")
+```
+
